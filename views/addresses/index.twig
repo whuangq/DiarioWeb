@@ -1,0 +1,58 @@
+{% extends 'layout.twig' %}
+
+
+{% block body %}
+
+<style>
+  table {
+    border-collapse: collapse;
+    width: 100%;
+  }
+
+  th, td {
+    border: 1px solid black;
+    padding: 8px;
+  }
+
+  tr:nth-child(even) {
+    background-color: #f2f2f2;
+  }
+</style>
+
+  <h1>{{ title }}</h1>
+  <p>{{ flashMessage }}</p>
+  <br>
+  <table summary="Tabla de direcciones personales para contactos." border="1">
+    <caption style="text-align:center;" align="bottom">Direcciones Personales</caption>
+    <thead border="1">
+      <tr>
+        <th scope="col">Nombre</th>
+        <th scope="col">Apellidos</th>
+        <th scope="col">Teléfono de la Casa</th>
+        <th scope="col">Dirección de la Casa</th>
+        <th scope="col">Teléfono del Trabajo</th>
+        <th scope="col">Dirección del Trabajo</th>
+        <th scope="col">Correo Electrónico</th>
+        <th scope="col"> </th>
+        <th scope="col"> </th>
+      </tr>
+    </thead>
+    <tbody>
+      {% for address in addresses %}
+        <tr border="1">
+          <td>{{ address.nombre }}</td>
+          <td>{{ address.apellidos }}</td>
+          <td>{{ address.telefonoCasa }}</td>
+          <td>{{ address.dirCasa }}</td>
+          <td>{{ address.telefonoTrabajo }}</td>
+          <td>{{ address.dirTrabajo }}</td>
+          <td><a href="mailto:{{address.email}}">{{ address.email }}</a></td>
+          <td><a href="/addresses/update/{{ address.id }}">Editar</a></td>
+          <td><a href="/addresses/delete/{{ address.id }}">Borrar</a></td>
+        </tr>
+      {% endfor %}
+    </tbody>
+  </table>
+  <br>
+  <a href="/addresses/create">¡Añadir una nueva publicación!</a>
+{% endblock %}
