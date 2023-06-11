@@ -1,21 +1,24 @@
-const Address = require('../models').Address;
+const Publicacion = require('../models').Publicacion;
 
-class AddressController { //ArticlesController
+class PublicacionController {
     async index(req, res, next) {
-        const addresses = await Address.findAll(); // const articles = await Article.findAll()
-        console.log("Controller addresses: " + addresses);
-        if (req.session.flashMessage) { //                                         articles: articles
-            res.render('addresses/index', { title: 'Base de Datos de Direcciones', addresses: addresses, flashMessage: req.session.flashMessage });
+        res.render('publicacion/index', { title: 'Base de Datos de Direcciones'});
+        /*
+        const publicaciones = await Publicacion.findAll();
+        console.log("Controller Publicacion: " + publicaciones);
+        if (req.session.flashMessage) {
+            res.render('publicacion/index', { title: 'Base de Datos de Direcciones', publicaciones: publicaciones, flashMessage: req.session.flashMessage });
         }
-        else {//                                                                   articles: articles
-            res.render('addresses/index', { title: 'Base de Datos de Direcciones', addresses: addresses});
-        }
+        else {
+            res.render('publicacion/index', { title: 'Base de Datos de Direcciones', publicaciones: publicaciones});
+        }*/
     }
 
+    /*
     async create(req, res, next) {
         console.log(req.method);
         if (req.method === 'POST') {
-            await Address.create({
+            await Publicacion.create({
                 nombre: req.body.nombre,
                 apellidos: req.body.apellidos, 
                 telefonoCasa: req.body.telefonoCasa, 
@@ -24,10 +27,10 @@ class AddressController { //ArticlesController
                 dirTrabajo: req.body.dirTrabajo, 
                 email: req.body.email
             });
-            res.redirect('/addresses');
+            res.redirect('/publicacion');
         }
         else {
-            res.render('addresses/create', { title: 'Base de Datos de Direcciones, crear'});
+            res.render('publicacion/create', { title: 'Base de Datos de Direcciones, crear'});
         }
     }
 
@@ -69,7 +72,7 @@ class AddressController { //ArticlesController
         req.session.flashMessage = 'Se eliminó la publicación';
         res.redirect('/addresses');
     }
-
+*/
 }
 
-module.exports = AddressController; // module.exports = ArticlesController
+module.exports = PublicacionController;
