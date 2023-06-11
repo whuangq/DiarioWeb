@@ -1,42 +1,42 @@
 'use strict';
 module.exports = {
   up: async (queryInterface, Sequelize) => {
-    await queryInterface.createTable('Publicaciones', {
+    await queryInterface.createTable('Posts', {
       id: {
         allowNull: false,
         autoIncrement: true,
         primaryKey: true,
         type: Sequelize.INTEGER
       },
-      titutlo: {
+      tittle: {
         type: Sequelize.STRING
       },
-      fecha: {
+      date: {
         type: Sequelize.DATE
       },
-      imagen: {
+      image: {
         type: Sequelize.BLOB
       },
-      texto: {
+      text: {
         type: Sequelize.STRING
       },
-      autor: {
+      author: {
         type: Sequelize.STRING
       },
-      categoria: {
+      category: {
         type: Sequelize.STRING
       },
-      numComentarios: {
+      numComments: {
         type: Sequelize.INTEGER
       }
     });
   },
   down: async (queryInterface, Sequelize) => {
-    await queryInterface.dropTable('Publicaciones');
+    await queryInterface.dropTable('Posts');
   },
 
   up: async (queryInterface, Sequelize) => {
-    await queryInterface.createTable('Usuarios', {
+    await queryInterface.createTable('Users', {
       id: {
         allowNull: false,
         autoIncrement: true,
@@ -46,10 +46,10 @@ module.exports = {
       username: {
         type: Sequelize.STRING
       },
-      nombre: {
+      name: {
         type: Sequelize.STRING
       },
-      apellido: {
+      surnames: {
         type: Sequelize.STRING
       },
       password: {
@@ -61,29 +61,29 @@ module.exports = {
     });
   },
   down: async (queryInterface, Sequelize) => {
-    await queryInterface.dropTable('Usuarios');
+    await queryInterface.dropTable('Users');
   },
 
   up: async (queryInterface, Sequelize) => {
-    await queryInterface.createTable('Comentarios', {
+    await queryInterface.createTable('Comments', {
       id: {
         allowNull: false,
         autoIncrement: true,
         primaryKey: true,
         type: Sequelize.INTEGER
       },
-      texto: {
+      text: {
         type: Sequelize.STRING
       },
-      autor: {
+      author: {
         type: Sequelize.STRING
       },
-      fecha: {
+      date: {
         type: Sequelize.DATE
       }
     });
   },
   down: async (queryInterface, Sequelize) => {
-    await queryInterface.dropTable('Comentarios');
+    await queryInterface.dropTable('Comments');
   }
 };
