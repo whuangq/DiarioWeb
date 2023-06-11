@@ -1,21 +1,21 @@
-const Address = require('../models').Address;
+const Post = require('../models').Post;
 
-class AddressController { //ArticlesController
+class PostController {
     async index(req, res, next) {
-        const addresses = await Address.findAll(); // const articles = await Article.findAll()
-        console.log("Controller addresses: " + addresses);
-        if (req.session.flashMessage) { //                                         articles: articles
-            res.render('addresses/index', { title: 'Base de Datos de Direcciones', addresses: addresses, flashMessage: req.session.flashMessage });
+        const posts = await Post.findAll();
+        console.log("Controller posts: " + posts);
+        if (req.session.flashMessage) {
+            res.render('addresses/index', { title: 'Base de Datos de Direcciones', posts: posts, flashMessage: req.session.flashMessage });
         }
-        else {//                                                                   articles: articles
-            res.render('addresses/index', { title: 'Base de Datos de Direcciones', addresses: addresses});
+        else {
+            res.render('addresses/index', { title: 'Base de Datos de Direcciones', posts: posts});
         }
     }
 
     async create(req, res, next) {
         console.log(req.method);
         if (req.method === 'POST') {
-            await Address.create({
+            await Post.create({
                 nombre: req.body.nombre,
                 apellidos: req.body.apellidos, 
                 telefonoCasa: req.body.telefonoCasa, 
@@ -33,7 +33,7 @@ class AddressController { //ArticlesController
 
     async update(req, res, next) {
         if (req.method === 'POST') {
-            await Address.update(
+            await Post.update(
             {
                 nombre: req.body.nombre,
                 apellidos: req.body.apellidos, 
@@ -51,17 +51,17 @@ class AddressController { //ArticlesController
             res.redirect('/addresses');
         }
         else {
-            const address = await Address.findOne({
+            const post = await Post.findOne({
                 where: {
                     id: req.params.id
                 }
             });
-            res.render('addresses/update', { title: 'Base de Datos de Direcciones, editar', address: address});
+            res.render('addresses/update', { title: 'Base de Datos de Direcciones, editar', post: post});
         }
     }
 
     async delete(req, res, next) {
-        await Address.destroy({
+        await Post.destroy({
             where: {
                 id: req.params.id
             }
@@ -72,4 +72,4 @@ class AddressController { //ArticlesController
 
 }
 
-module.exports = AddressController; // module.exports = ArticlesController
+module.exports = PostController;
