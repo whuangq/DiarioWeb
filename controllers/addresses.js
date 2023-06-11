@@ -1,13 +1,13 @@
 const Address = require('../models').Address;
 
-class AddressController {
+class AddressController { //ArticlesController
     async index(req, res, next) {
-        const addresses = await Address.findAll();
+        const addresses = await Address.findAll(); // const articles = await Article.findAll()
         console.log("Controller addresses: " + addresses);
-        if (req.session.flashMessage) {
+        if (req.session.flashMessage) { //                                         articles: articles
             res.render('addresses/index', { title: 'Base de Datos de Direcciones', addresses: addresses, flashMessage: req.session.flashMessage });
         }
-        else {
+        else {//                                                                   articles: articles
             res.render('addresses/index', { title: 'Base de Datos de Direcciones', addresses: addresses});
         }
     }
@@ -72,4 +72,4 @@ class AddressController {
 
 }
 
-module.exports = AddressController;
+module.exports = AddressController; // module.exports = ArticlesController
