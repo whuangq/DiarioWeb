@@ -6,7 +6,7 @@ module.exports = (sequelize, DataTypes) => {
   class Post extends Model {
   };
   Post.init({
-    tittle: DataTypes.STRING,
+    title: DataTypes.STRING,
     date: DataTypes.DATE,
     image: DataTypes.BLOB,
     text: DataTypes.STRING,
