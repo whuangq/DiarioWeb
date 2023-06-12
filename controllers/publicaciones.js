@@ -3,18 +3,15 @@ const Post = require('../models').Post;
 class PostController {
     async index(req, res, next) {
         res.render('publicacion/index', { title: 'Base de Datos de Direcciones'});
-        /*
+        
         const posts = await Post.findAll();
         console.log("Controller posts: " + posts);
         if (req.session.flashMessage) {
-            res.render('addresses/index', { title: 'Base de Datos de Direcciones', posts: posts, flashMessage: req.session.flashMessage });
+            res.render('publicacion/index', { title: 'Base de Datos de Direcciones', posts: posts, flashMessage: req.session.flashMessage });
         }
         else {
-            res.render('addresses/index', { title: 'Base de Datos de Direcciones', posts: posts});
+            res.render('publicacion/index', { title: 'Base de Datos de Direcciones', posts: posts});
         }
-        else {
-            res.render('publicacion/index', { title: 'Base de Datos de Direcciones', publicaciones: publicaciones});
-        }*/
     }
 
     /*

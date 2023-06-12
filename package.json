@@ -17,5 +17,8 @@
     "require.all": "^2.0.5",
     "sequelize": "^6.32.0",
     "twig": "~0.10.3"
+  },
+  "devDependencies": {
+    "sequelize-cli": "^6.6.1"
   }
 }
