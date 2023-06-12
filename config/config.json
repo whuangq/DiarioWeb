@@ -3,21 +3,21 @@
     "username": "eb93929",
     "password": "Xeb93929!",
     "database": "ci0137_eb93929",
-    "host": "10.1.4.63",
+    "host": "127.0.0.1",
     "dialect": "mysql"
   },
   "test": {
     "username": "eb93929",
     "password": "Xeb93929!",
     "database": "ci0137_eb93929",
-    "host": "10.1.4.63",
+    "host": "127.0.0.1",
     "dialect": "mysql"
   },
   "production": {
     "username": "eb93929",
     "password": "Xeb93929!",
     "database": "ci0137_eb93929",
-    "host": "10.1.4.63",
+    "host": "127.0.0.1",
     "dialect": "mysql"
   }
 }
