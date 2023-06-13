@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Login/Register Form</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      padding: 20px;
+    }
+    .container {
+      max-width: 400px;
+      margin: 0 auto;
+    }
+    h2 {
+      text-align: center;
+    }
+    .button-container {
+      display: flex;
+      justify-content: space-between;
+      margin-top: 20px;
+    }
+    .box {
+      background-color: #f0f0f0;
+      padding: 20px;
+      border-radius: 4px;
+      flex-basis: 48%;
+    }
+    button {
+      background-color: #4CAF50;
+      color: white;
+      padding: 10px 20px;
+      border: none;
+      border-radius: 4px;
+      cursor: pointer;
+      width: 100%;
+    }
+    button:hover {
+      background-color: #45a049;
+    }
+    .box p {
+      text-align: center;
+      margin: 10px 0;
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <h2>Welcome</h2>
+    <div class="button-container">
+      <div class="box">
+        <p>Existing User?</p>
+        <button onclick="location.href='/login'">Login</button>
+      </div>
+      <div class="box">
+        <p>New User?</p>
+        <button onclick="location.href='/register'">Register</button>
+      </div>
+    </div>
+  </div>
+</body>
+</html>
