@@ -28,12 +28,12 @@ class PostsController {
                 text: req.body.text, 
                 author: req.body.author, 
                 category: req.body.category, 
-                numComments: req.body.numComments
+                numComments: 0
             });
             res.redirect('/publicacion');
         }
         else {
-            res.render('publicacion/create', { title: 'Base de Datos de Direcciones, crear'});
+            res.render('publicacion/create', { title: 'Crear una nueva publicación'});
         }
     }
     /*

@@ -4,39 +4,30 @@
     <h1>{{ title }}</h1>
     <form method="POST">
         <div>
-            <label for="nombre">Nombre:</label><br />
-            <input id="nombre" name="nombre" type="text" />
+            <label for="title">Título:</label><br />
+            <input id="title" name="title" type="text" />
         </div>
 
         <div>
-            <label for="apellidos">Apellidos:</label><br />
-            <textarea id="apellidos" name="apellidos"></textarea>
+            <label for="date">Fecha de publicación:</label><br />
+            <input id="date" name="date" type="date" />
         </div>
 
         <div>
-            <label for="telefonoCasa">Teléfono de la Casa:</label><br />
-            <input id="telefonoCasa" name="telefonoCasa" type="text" />
+            <label for="text">Contenido de la publicacion:</label><br />
+            <textarea id="text" name="text"></textarea>
         </div>
 
         <div>
-            <label for="dirCasa">Dirección de la Casa:</label><br />
-            <textarea id="dirCasa" name="dirCasa"></textarea>
+            <label for="author">Autor:</label><br />
+            <input id="author" name="author" type="text" />
         </div>
 
         <div>
-            <label for="telefonoTrabajo">Teléfono del Trabajo:</label><br />
-            <textarea id="telefonoTrabajo" name="telefonoTrabajo"></textarea>
+            <label for="category">Categoría de la publicación:</label><br />
+            <textarea id="category" name="category"></textarea>
         </div>
-
-        <div>
-            <label for="dirTrabajo">Dirección del Trabajo:</label><br />
-            <textarea id="dirTrabajo" name="dirTrabajo"></textarea>
-        </div>
-
-        <div>
-            <label for="email">Correo Electrónico:</label><br />
-            <textarea id="email" name="email"></textarea>
-        </div>
+        
         <input type="submit" value="Crear" />
     </form>
 {% endblock %}
