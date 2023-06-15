@@ -1,0 +1,9 @@
+{% extends 'layout.twig' %}
+
+{% block body %}
+  <h1>Agregar Comentario</h1>
+  <form action="/comments" method="post">
+    <textarea name="text" placeholder="Escribe tu comentario"></textarea>
+    <button type="submit">Enviar</button>
+  </form>
+{% endblock %}
