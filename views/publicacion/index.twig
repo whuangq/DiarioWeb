@@ -1,6 +1,5 @@
 {% extends 'layout.twig' %}
 
-
 {% block body %}
 <!DOCTYPE html>
 <html class="no-js" lang="es">
@@ -108,9 +107,21 @@
               <li><a href="#">Jessica</a></li>
               <li><a href="#">José</a></li>
               <li><a href="#">Andrés</a></li>
+              <li><a href="/publicaciones/create">Agregar un nuevo publicación</a></li>
               <li>
-                <a href="/publicaciones/create">Agregar un nuevo contacto</a>
+                {% for post in posts %}
+                  <div class="post">
+                    <h2>{{ post.title }}</h2>
+                    <p>{{ post.text }}</p>
+                    <p>Author: {{ post.author }}</p>
+                    <p>Category: {{ post.category }}</p>
+                    <p>Number of Comments: {{ post.numComments }}</p>
+                    <a href="/posts/{{ post.id }}">Read More</a>
+                  </div>
+                {% endfor %}
               </li>
+              <li><a href="/comment/index">Ver comentarios</a></li>
+              <li><a href="/comment/create">Agregar un nuevo comentario</a></li>
             </ul>
           </div>
         </aside>
