@@ -3,12 +3,36 @@
 {% block body %}
 <!DOCTYPE html>
 <html class="no-js" lang="es">
+  <style>
+    .blog-post {
+      padding: 20px;
+      border: 1px solid #a8a8a8;
+      border-radius: 4px;
+    }
+    .button {
+      display: inline-block;
+      background-color: #4CAF50;
+      color: white;
+      padding: 10px 20px;
+      border: none;
+      border-radius: 4px;
+      text-decoration: none;
+      cursor: pointer;
+      font-size: 16px;
+      transition: background-color 0.3s ease;
+    }
+
+    .button:hover {
+      background-color: #45a049;
+    }
+  </style>
+
   <body>
     <!-- Start Top Bar -->
     <div class="top-bar">
       <div class="top-bar-left">
         <ul class="menu">
-          <li class="menu-text">Organización o persona</li>
+          <li class="menu-text">Wilson Huang - Yuan Isa Wu </li>
         </ul>
       </div>
       <div class="top-bar-right">
@@ -27,73 +51,26 @@
     <section class="grid-container">
       <div class="grid-x grid-margin-x" id="content">
         <div class="medium-9 cell">
-          <article class="blog-post">
-            <h3>Un excelente título de publicación <small>18/10/2021</small></h3>
-            <img class="thumbnail" src="https://via.placeholder.com/850x350">
-            <p>Praesent id metus massa, ut blandit odio. Proin quis tortor orci.
-              Etiam at risus et justo dignissim congue. Donec congue lacinia
-              dui, a porttitor lectus condimentum laoreet. Nunc eu ullamcorper
-              orci. Quisque eget odio ac lectus vestibulum faucibus eget in
-              metus. In pellentesque faucibus vestibulum. Nulla at nulla justo,
-              eget luctus.</p>
-            <div class="callout">
-              <ul class="menu simple">
-                <li><a href="#">Autor: José Pérez</a></li>
-                <li><a href="#">Comentarios: 3</a></li>
-              </ul>
-            </div>
-          </article>
-          <article class="blog-post">
-            <h3>Un excelente título de publicación <small>18/10/2021</small></h3>
-            <img class="thumbnail" src="https://via.placeholder.com/850x350">
-            <p>Praesent id metus massa, ut blandit odio. Proin quis tortor orci.
-              Etiam at risus et justo dignissim congue. Donec congue lacinia
-              dui, a porttitor lectus condimentum laoreet. Nunc eu ullamcorper
-              orci. Quisque eget odio ac lectus vestibulum faucibus eget in
-              metus. In pellentesque faucibus vestibulum. Nulla at nulla justo,
-              eget luctus.</p>
-            <div class="callout">
-              <ul class="menu simple">
-                <li><a href="#">Autor: José Pérez</a></li>
-                <li><a href="#">Comentarios: 3</a></li>
-              </ul>
-            </div>
-          </article>
-          <article class="blog-post">
-            <h3>Un excelente título de publicación <small>18/10/2021</small></h3>
-            <img class="thumbnail" src="https://via.placeholder.com/850x350">
-            <p>Praesent id metus massa, ut blandit odio. Proin quis tortor orci.
-              Etiam at risus et justo dignissim congue. Donec congue lacinia
-              dui, a porttitor lectus condimentum laoreet. Nunc eu ullamcorper
-              orci. Quisque eget odio ac lectus vestibulum faucibus eget in
-              metus. In pellentesque faucibus vestibulum. Nulla at nulla justo,
-              eget luctus.</p>
-            <div class="callout">
-              <ul class="menu simple">
-                <li><a href="#">Autor: José Pérez</a></li>
-                <li><a href="#">Comentarios: 3</a></li>
-              </ul>
-            </div>
-          </article>
-          <article class="blog-post">
-            <h3>Un excelente título de publicación <small>18/10/2021</small></h3>
-            <img class="thumbnail" src="https://via.placeholder.com/850x350">
-            <p>Praesent id metus massa, ut blandit odio. Proin quis tortor orci.
-              Etiam at risus et justo dignissim congue. Donec congue lacinia
-              dui, a porttitor lectus condimentum laoreet. Nunc eu ullamcorper
-              orci. Quisque eget odio ac lectus vestibulum faucibus eget in
-              metus. In pellentesque faucibus vestibulum. Nulla at nulla justo,
-              eget luctus.</p>
-            <div class="callout">
-              <ul class="menu simple">
-                <li><a href="#">Autor: José Pérez</a></li>
-                <li><a href="#">Comentarios: 3</a></li>
-              </ul>
-            </div>
-          </article>
+            {% for post in posts %}
+              <article class="blog-post">
+                <h3>{{ post.title }}</h3><small>{{post.createdAt}}</small>
+                <picture>
+                  <source srcset="https://cdn.pixabay.com/photo/2016/03/31/19/21/icon-1294942_1280.png" type="image/png">
+                  <img class="thumbnail" src={{post.image}} alt="Imagen de publicacion">
+                </picture>
+                <p>{{ post.text }}</p>
+                <div class="callout">
+                  <ul class="menu simple">
+                    <li><a href="#">Autor: {{post.author}}</a></li>
+                    <li><a href="#">Comentarios: {{ post.numComments }}</a></li>
+                  </ul>
+                </div>
+              </article> 
+            {% endfor %}
         </div>
         <aside class="medium-3 cell" data-sticky-container="">
           <div class="sticky" data-sticky="" data-anchor="content">
+          <button class="button" onclick="location.href='/publicaciones/create'">Crear publicación</button>
             <h4>Categorías</h4>
             <ul>
               <li><a href="#">PHP</a></li>
@@ -107,19 +84,6 @@
               <li><a href="#">Jessica</a></li>
               <li><a href="#">José</a></li>
               <li><a href="#">Andrés</a></li>
-              <li><a href="/publicaciones/create">Agregar un nuevo publicación</a></li>
-              <li>
-                {% for post in posts %}
-                  <div class="post">
-                    <h2>{{ post.title }}</h2>
-                    <p>{{ post.text }}</p>
-                    <p>Author: {{ post.author }}</p>
-                    <p>Category: {{ post.category }}</p>
-                    <p>Number of Comments: {{ post.numComments }}</p>
-                    <a href="/posts/{{ post.id }}">Read More</a>
-                  </div>
-                {% endfor %}
-              </li>
               <li><a href="/comment/index">Ver comentarios</a></li>
               <li><a href="/comment/create">Agregar un nuevo comentario</a></li>
             </ul>

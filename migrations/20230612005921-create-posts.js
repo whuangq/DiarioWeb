@@ -19,7 +19,7 @@ module.exports = {
         type: Sequelize.BLOB
       },
       text: {
-        type: Sequelize.STRING
+        type: Sequelize.STRING(8192)
       },
       author: {
         type: Sequelize.STRING
