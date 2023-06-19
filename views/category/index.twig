@@ -1,0 +1,15 @@
+<!-- views/category/index.twig -->
+
+{% extends 'layout.twig' %}
+
+{% block body %}
+  <h1>Posts de la categoría: {{ dcategory.name }}</h1>
+
+  {% for post in dcategory.posts %}
+    <article>
+      <h2>{{ post.title }}</h2>
+      <p>{{ post.text }}</p>
+      <small>Autor: {{ post.author }}</small>
+    </article>
+  {% endfor %}
+{% endblock %}

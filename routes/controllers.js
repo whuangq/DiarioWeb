@@ -1,16 +1,73 @@
-const express = require('express');
+const express = require("express");
 const router = express.Router();
-const controllers = require('require.all')('../controllers');
+const controllers = require("require.all")("../controllers");
+var path = require("path");
+const bodyparser = require('body-parser');
+const multer = require('multer');
 
-router
-.all('/:controller', (req, res, next) => {
-    (new controllers[req.params.controller]).index(req, res, next);
+//use express static folder
+router.use(express.static("./public"))
+ 
+// body-parser middleware use
+router.use(bodyparser.json())
+router.use(bodyparser.urlencoded({
+    extended: true
+}))
+
+var storage = multer.diskStorage({
+  destination: (req, file, callBack) => {
+      callBack(null, './public/images/')     // './public/images/' directory name where save the file
+  },
+  filename: (req, file, callBack) => {
+      callBack(null, file.fieldname + '-' + Date.now() + path.extname(file.originalname))
+  }
 })
-.all('/:controller/:action', (req, res, next) => {
-    (new controllers[req.params.controller])[req.params.action](req, res, next);
-})
-.all('/:controller/:action/:id', (req, res, next) => {
-    (new controllers[req.params.controller])[req.params.action](req, res, next);
+
+var upload = multer({
+  storage: storage
 });
 
+router
+  .all("/:controller", (req, res, next) => {
+    const controller = new controllers[req.params.controller]();
+    if (typeof controller.index === "function") {
+      controller.index(req, res, next);
+    } else {
+      next();
+    }
+  })
+  .all("/:controller/:action", upload.single('image'), (req, res, next) => {
+    const controller = new controllers[req.params.controller]();
+    if (typeof controller[req.params.action] === "function") {
+      controller[req.params.action](req, res, next);
+    } else {
+      next();
+    }
+  })
+  .all("/:controller/:action/:id", upload.single('image'), (req, res, next) => {
+    const controller = new controllers[req.params.controller]();
+    if (typeof controller[req.params.action] === "function") {
+      controller[req.params.action](req, res, next);
+    } else {
+      next();
+    }
+  })
+  .all("/:controller/:category", (req, res, next) => {
+    new controllers[req.params.controller]().index(req, res, next);
+  })
+
+
+/*
+router
+  .all("/:controller", (req, res, next) => {
+    new controllers[req.params.controller]().index(req, res, next);
+  })
+  .all("/:controller/:action", upload.single('image'), (req, res, next) => {
+    new controllers[req.params.controller]()[req.params.action](req, res, next);
+  })
+  .all("/:controller/:action/:id", upload.single('image'), (req, res, next) => {
+    new controllers[req.params.controller]()[req.params.action](req, res, next);
+  });*/
+
+  
 module.exports = router;

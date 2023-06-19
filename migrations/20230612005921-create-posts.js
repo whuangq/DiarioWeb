@@ -25,7 +25,13 @@ module.exports = {
         type: Sequelize.STRING
       },
       category: {
-        type: Sequelize.STRING
+        type: Sequelize.STRING,
+        references: {
+          model: 'Categories',
+          key: 'name',
+        },
+        onUpdate: 'CASCADE',
+        onDelete: 'SET NULL',
       },
       numComments: {
         type: Sequelize.INTEGER

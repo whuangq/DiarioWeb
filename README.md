@@ -12,4 +12,4 @@
 
 - npx sequelize-cli db:migrate:undo
 - npx sequelize-cli db:migrate:undo:all
-- db:migrate:undo --name 20180704124934-create-branch.js
+- db:migrate:undo --name 20230612005921-create-posts.js
