@@ -55,8 +55,11 @@
               <article class="blog-post">
                 <h3>{{ post.title }}</h3><small>{{post.createdAt}}</small>
                 <picture>
-                  <source srcset="https://cdn.pixabay.com/photo/2016/03/31/19/21/icon-1294942_1280.png" type="image/png">
-                  <img class="thumbnail" src={{post.image}} alt="Imagen de publicacion">
+                  {% if post.image %}
+                    <img class="thumbnail" src="{{ post.image }}" alt="Imagen de publicación">
+                  {% else %}
+                    <img class="thumbnail" src="https://cdn.pixabay.com/photo/2016/03/31/19/21/icon-1294942_1280.png" alt="Imagen de publicación alternativa">
+                  {% endif %}
                 </picture>
                 <p>{{ post.text }}</p>
                 <div class="callout">
@@ -70,13 +73,12 @@
         </div>
         <aside class="medium-3 cell" data-sticky-container="">
           <div class="sticky" data-sticky="" data-anchor="content">
-          <button class="button" onclick="location.href='/publicaciones/create'">Crear publicación</button>
+            <a class="button" href="/publicaciones/create">Crear publicación</a>
             <h4>Categorías</h4>
             <ul>
-              <li><a href="#">PHP</a></li>
-              <li><a href="#">JavaScript</a></li>
-              <li><a href="#">C#</a></li>
-              <li><a href="#">Java</a></li>
+              {% for category in categories %}
+                <li><a href="/category/{{ category.name }}">{{ category.name }}</a></li>
+              {% endfor %}
             </ul>
             <h4>Autores</h4>
             <ul>
@@ -92,16 +94,25 @@
       </div>
       <div class="grid-x cell">
         <ul class="pagination" role="navigation" aria-label="Pagination">
-          <li class="disabled">Previa</li>
-          <li class="current"><span class="show-for-sr">You're on page</span> 1</li>
-          <li><a href="#" aria-label="Page 2">2</a></li>
-          <li><a href="#" aria-label="Page 3">3</a></li>
-          <li><a href="#" aria-label="Page 4">4</a></li>
-          <li class="ellipsis"><br>
-          </li>
-          <li><a href="#" aria-label="Page 12">12</a></li>
-          <li><a href="#" aria-label="Page 13">13</a></li>
-          <li><a href="#" aria-label="Next page">Siguiente</a></li>
+          {% if currentPage > 1 %}
+            <li><a href="/publicaciones?page={{ currentPage - 1 }}" aria-label="Previous">Previa</a></li>
+          {% else %}
+            <li class="disabled">Previa</li>
+          {% endif %}
+          
+          {% for page in 1..totalPages %}
+            {% if page == currentPage %}
+              <li class="current"><span class="show-for-sr">You're on page</span> {{ page }}</li>
+            {% else %}
+              <li><a href="/publicaciones?page={{ page }}" aria-label="Page {{ page }}">{{ page }}</a></li>
+            {% endif %}
+          {% endfor %}
+
+          {% if currentPage < totalPages %}
+            <li><a href="/publicaciones?page={{ currentPage + 1 }}" aria-label="Next page">Siguiente</a></li>
+          {% else %}
+            <li class="disabled">Siguiente</li>
+          {% endif %}
         </ul>
       </div>
     </section>
@@ -117,7 +128,4 @@
     </script>
   </body>
 </html>
-
-
-
 {% endblock %}

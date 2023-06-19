@@ -16,12 +16,16 @@ module.exports = (sequelize, DataTypes) => {
       Posts.belongsTo(models.Users, {
         foreignKey: 'author',
       });
+      Posts.belongsTo(models.Category, {
+        foreignKey: 'category',
+        targetKey: 'name',
+      });
     }
   }
   Posts.init({
     title: DataTypes.STRING,
     date: DataTypes.DATE,
-    image: DataTypes.BLOB,
+    image: DataTypes.STRING,
     text: DataTypes.STRING (8192),
     author: DataTypes.STRING,
     category: DataTypes.STRING,

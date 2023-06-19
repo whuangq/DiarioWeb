@@ -1,79 +1,63 @@
-// const Posts = require('../models').Posts;
-const { Posts, Comments, Users/*, Category*/ } = require('../models');
+// controllers/PostsController.js
+const Posts = require('../models/').Posts;
+const Category = require('../models/').Category;
 
 class PostsController {
-    async index(req, res, next) {
-        // res.render('publicacion/index', { title: 'Base de Datos de Direcciones'});
-        
-        const posts = await Posts.findAll();
-        console.log("Controller posts: " + posts);
-        if (req.session.flashMessage) {
-            res.render('publicacion/index', { title: 'Base de Datos de Direcciones', posts: posts, flashMessage: req.session.flashMessage });
-        }
-        else {
-            res.render('publicacion/index', { title: 'Base de Datos de Direcciones', posts: posts});
-        }/**/
-    }
+  async index(req, res) {
+    try {
+      const currentPage = req.query.page || 1;
+      const limit = 5; // Número máximo de publicaciones por página
+  
+      const offset = (currentPage - 1) * limit;
+  
+      const posts = await Posts.findAll({
+        order: [['createdAt', 'DESC']],
+        limit,
+        offset,
+      });
 
-    
-    async create(req, res, next) {
-        console.log(req.method);
-        if (req.method === 'POST') {
-            await Posts.create({
-                title: req.body.title,
-                date: req.body.date, 
-                image: req.body.image, 
-                text: req.body.text, 
-                author: req.body.author, 
-                category: req.body.category, 
-                numComments: 0
-            });
-            res.redirect('/publicaciones');
-        }
-        else {
-            res.render('publicacion/create', { title: 'Crear una nueva publicación'});
-        }
-    }
-    /*
-    async update(req, res, next) {
-        if (req.method === 'POST') {
-            await Post.update(
-            {
-                nombre: req.body.nombre,
-                apellidos: req.body.apellidos, 
-                telefonoCasa: req.body.telefonoCasa, 
-                dirCasa: req.body.dirCasa, 
-                telefonoTrabajo: req.body.telefonoTrabajo, 
-                dirTrabajo: req.body.dirTrabajo, 
-                email: req.body.email
-            },
-            {
-                where: {
-                    id: req.params.id
-                }
-            });
-            res.redirect('/addresses');
-        }
-        else {
-            const post = await Post.findOne({
-                where: {
-                    id: req.params.id
-                }
-            });
-            res.render('addresses/update', { title: 'Base de Datos de Direcciones, editar', post: post});
-        }
-    }
+      const posts1 = await Posts.findAndCountAll({
+        order: [['createdAt', 'DESC']],
+        limit,
+        offset,
+      });
+  
+      const totalPosts = posts1.count;
+      const totalPages = Math.ceil(totalPosts / limit);
 
-    async delete(req, res, next) {
-        await Post.destroy({
-            where: {
-                id: req.params.id
+      // Obtener las categorías
+      const categories = await Category.findAll();
+  
+      res.render('publicacion/index', { posts, currentPage, totalPages, categories });
+    } catch (error) {
+      console.error(error);
+      res.status(500).send('Error al obtener las publicaciones');
+    }
+  }
+  
+  async create(req, res) {
+    if (req.method === 'POST') {
+        try {
+            const { title, date, text, author, category } = req.body;
+            let image = '';
+      
+            if (req.file) {
+              // Si se proporciona una imagen, obtener el nombre del archivo subido
+              image = 'images/' + req.file.filename;
             }
-        });
-        req.session.flashMessage = 'Se eliminó la publicación';
-        res.redirect('/addresses');
-    }
-*/
+      
+            const newPost = await Posts.create({ title, date, text, author, category, image });
+      
+            res.redirect('/publicaciones'); // Redirecciona a la página principal u otra página después de la creación exitosa
+          } catch (error) {
+            console.error(error);
+            res.status(500).send('Error en la creación de la publicación');
+          }
+    } else {
+        res.render('publicacion/create', { title: 'Crear una nueva publicación' });
+      }
+    
+  }
 }
 
 module.exports = PostsController;
