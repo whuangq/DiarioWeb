@@ -1,21 +1,21 @@
 // const Posts = require('../models').Posts;
-const { Posts, Comments, Users/*, Category*/ } = require('../models');
+const { Posts, Comment, Users/*, Category*/ } = require('../models');
 
 class PostsController {
     async index(req, res, next) {
         // res.render('publicacion/index', { title: 'Base de Datos de Direcciones'});
         
         const posts = await Posts.findAll();
+        const comments = await Comment.findAll()
         console.log("Controller posts: " + posts);
         if (req.session.flashMessage) {
-            res.render('publicacion/index', { title: 'Base de Datos de Direcciones', posts: posts, flashMessage: req.session.flashMessage });
+            res.render('publicaciones/index', { title: 'Base de Datos de Direcciones', posts: posts,  comments : comments, flashMessage: req.session.flashMessage });
         }
         else {
-            res.render('publicacion/index', { title: 'Base de Datos de Direcciones', posts: posts});
+            res.render('publicaciones/index', { title: 'Base de Datos de Direcciones', posts: posts, comments : comments});
         }/**/
     }
 
-    
     async create(req, res, next) {
         console.log(req.method);
         if (req.method === 'POST') {
@@ -31,9 +31,51 @@ class PostsController {
             res.redirect('/publicaciones');
         }
         else {
-            res.render('publicacion/create', { title: 'Crear una nueva publicación'});
+            res.render('publicaciones/create', { title: 'Crear una nueva publicación'});
         }
     }
+
+    async view(req, res, next) {
+        if (req.method === "POST") {
+            await Comment.create({
+              text: req.body.text,
+              postId: req.body.postId,
+              date: Date(),
+              author: req.body.author,
+            });
+            res.redirect("/publicaciones/view/" + req.body.postId);
+          } else {
+            console.log("entered else")
+            const post = await Posts.findOne({
+              where: {
+                id: req.params.id,
+              },
+            });
+            if (post != null) {
+                const comments = await Comment.findAll({
+                    where: {
+                        postId : req.params.id
+                    }
+                })
+                res.render("publicaciones/view", {
+                    id : post.id,
+                    title: post.title,
+                    text: post.text,
+                    author : post.author,
+                    image : post.image,
+                    date : post.date,
+                    comments : comments
+                });
+            } else {
+                res.render ("publicaciones/view", {
+                    title: "post.title",
+                    text: "post.text",
+                    author : "post.author",
+                    image : "post.image",
+                    date : "post.date"
+                });
+            }
+    }}
     /*
     async update(req, res, next) {
         if (req.method === 'POST') {

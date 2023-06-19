@@ -28,21 +28,6 @@
   </style>
 
   <body>
-    <!-- Start Top Bar -->
-    <div class="top-bar">
-      <div class="top-bar-left">
-        <ul class="menu">
-          <li class="menu-text">Wilson Huang - Yuan Isa Wu </li>
-        </ul>
-      </div>
-      <div class="top-bar-right">
-        <ul class="menu">
-          <li><a href="/access">Acceso</a></li>
-          <li><a href="#">Administración</a></li>
-        </ul>
-      </div>
-    </div>
-    <!-- End Top Bar -->
     <div class="callout large primary">
       <div class="text-center">
         <h1>Diario web</h1>
@@ -53,7 +38,7 @@
         <div class="medium-9 cell">
             {% for post in posts %}
               <article class="blog-post">
-                <h3>{{ post.title }}</h3><small>{{post.createdAt}}</small>
+                <a href="/publicaciones/view/{{post.id}}"><h3>{{ post.title }}</h3></a><small>{{post.createdAt}}</small>
                 <picture>
                   <source srcset="https://cdn.pixabay.com/photo/2016/03/31/19/21/icon-1294942_1280.png" type="image/png">
                   <img class="thumbnail" src={{post.image}} alt="Imagen de publicacion">
@@ -62,7 +47,8 @@
                 <div class="callout">
                   <ul class="menu simple">
                     <li><a href="#">Autor: {{post.author}}</a></li>
-                    <li><a href="#">Comentarios: {{ post.numComments }}</a></li>
+                    <li><a href="/comment/p?postId={{post.id}}">Comentarios: {{ post.numComments }}</a></li>
+                    <li><a href="/comment/create">Agregar comentario </a></li>
                   </ul>
                 </div>
               </article> 
@@ -84,9 +70,6 @@
               <li><a href="#">Jessica</a></li>
               <li><a href="#">José</a></li>
               <li><a href="#">Andrés</a></li>
-              <li><a href="/comment/index">Ver comentarios</a></li>
-              <li><a href="/comment/create">Agregar un nuevo comentario</a></li>
-            </ul>
           </div>
         </aside>
       </div>

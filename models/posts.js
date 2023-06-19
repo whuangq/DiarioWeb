@@ -21,7 +21,7 @@ module.exports = (sequelize, DataTypes) => {
   Posts.init({
     title: DataTypes.STRING,
     date: DataTypes.DATE,
-    image: DataTypes.BLOB,
+    image: DataTypes.STRING,
     text: DataTypes.STRING (8192),
     author: DataTypes.STRING,
     category: DataTypes.STRING,

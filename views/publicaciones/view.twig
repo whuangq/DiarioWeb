@@ -1,0 +1,101 @@
+{% extends 'layout.twig' %}
+
+{% block body %}
+  <style>
+  .post {
+    margin: 10px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    border: 1px solid #a8a8a8;
+    border-radius: 4px;
+  }
+  .post-inner {
+    padding: 20px;
+    text-align: center;
+  }
+
+  .pos-text {
+    font-size : 20px;
+  }
+
+  .post-content {
+    width: 850px;
+    height: 500px;
+  }
+
+  .post-content img {
+    max-width: 100%;
+    height: auto;
+    margin-bottom: 10px;
+  }
+
+  .comments-list {
+    padding : 10px;
+  }
+
+  .comment {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    margin-bottom: 10px;
+  }
+
+  .comment-text {
+    font-size: 15px;
+    margin-bottom: 5px;
+  }
+
+  .comment-author {
+    font-size: 12px;
+    color: #777;
+  }
+
+</style>
+
+  <div class="post">
+    <div class="post-inner">
+      <h2 class="post-title">{{ title }}</h2>
+      <div class="post-details">
+        <p class="author">Author: {{ author }}</p>
+        <p class="date"> Date: {{date|date('Y-m-d') }}</p>
+      </div>
+      <div class="post-content">
+        <picture>
+          <source srcset="https://cdn.pixabay.com/photo/2016/03/31/19/21/icon-1294942_1280.png" type="image/png">
+          <img class="thumbnail" src={{image}} alt="Imagen de publicacion">
+        </picture>
+        <hr class="divider">
+        <p class="post-text">{{text }}</p>
+      </div>
+      
+      <hr class="divider">
+      {% if comments is not empty %}
+        <div class="comments-section">
+          <h3>Comments</h3>
+          <div class="comments-list">
+            {% for comment in comments %}
+              <div class="comment">
+                <span class="comment-text">{{ comment.text }}</span>
+                <span class="comment-author">- {{ comment.author }}</span>
+              </div>
+              <hr>
+            {% endfor %}
+          </ul>
+        </div>
+      {% else %}
+        <p>No comments yet.</p>
+      {% endif %}
+        <form method="POST">
+        <div class="mb-3">
+          <input type="text" class="form-control" id="text" name="text" maxlength="200" minlength='1' placeholder="Publicar un nuevo comentario. . ." required></textarea>
+        </div>
+        <input type="hidden" id="postId" name="postId" value="{{ id }}">
+        <input type="hidden" id="author" name="author" value="wilson(placeholder)">
+        <div>
+          <input class="btn btn-primary" type="submit" value="Publicar" />
+        </div>
+      </form>
+    </div>
+  </div>
+{% endblock %}
