@@ -62,8 +62,11 @@
       </div>
       <div class="post-content">
         <picture>
-          <source srcset="https://cdn.pixabay.com/photo/2016/03/31/19/21/icon-1294942_1280.png" type="image/png">
-          <img class="thumbnail" src={{image}} alt="Imagen de publicacion">
+          {% if image %}
+            <img class="thumbnail" src="../../{{image}}" alt="Imagen de publicacion">
+          {% else %}
+            <source srcset="https://cdn.pixabay.com/photo/2016/03/31/19/21/icon-1294942_1280.png" type="image/png">
+          {% endif %}
         </picture>
         <hr class="divider">
         <p class="post-text">{{text }}</p>
