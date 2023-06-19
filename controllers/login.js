@@ -11,6 +11,11 @@ class LoginController {
                 });
                 if (user) {
                     if (user.password === req.body.password) {
+                        req.session.username = user.username;
+                        req.session.name = user.name;
+                        req.session.surname = user.surname;
+                        req.session.email = user.email;
+                        req.session.role = user.role;
                         res.redirect('/publicaciones')
                     }
                 } else {

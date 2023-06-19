@@ -27,7 +27,7 @@ class PostsController {
           // Obtener las categorías
           const categories = await Category.findAll();
           
-          res.render('publicaciones/index', { posts, currentPage, totalPages, categories });
+          res.render('publicaciones/index', { posts, currentPage, totalPages, categories, user : req.session });
         } catch (error) {
           console.error(error);
           res.status(500).send('Error al obtener las publicaciones');
@@ -47,13 +47,13 @@ class PostsController {
           
                 const newPost = await Posts.create({ title, date, text, author, category, image });
           
-                res.redirect('/publicaciones'); // Redirecciona a la página principal u otra página después de la creación exitosa
+                res.redirect('/publicaciones', { user : req.session }); // Redirecciona a la página principal u otra página después de la creación exitosa
               } catch (error) {
                 console.error(error);
                 res.status(500).send('Error en la creación de la publicación');
               }
         } else {
-            res.render('publicaciones/create', { title: 'Crear una nueva publicación' });
+            res.render('publicaciones/create', { user : req.session });
           }
         
       }
@@ -66,7 +66,7 @@ class PostsController {
               date: Date(),
               author: req.body.author,
             });
-            res.redirect("/publicaciones/view/" + req.body.postId);
+            res.redirect("/publicaciones/view/" + req.body.postId, { user : req.session });
           } else {
             const post = await Posts.findOne({
               where: {
@@ -86,7 +86,8 @@ class PostsController {
                     author : post.author,
                     image : post.image,
                     date : post.date,
-                    comments : comments
+                    comments : comments,
+                    user : req.session
                 });
             } else {
                 res.render ("publicaciones/view", {
@@ -94,7 +95,8 @@ class PostsController {
                     text: "post.text",
                     author : "post.author",
                     image : "post.image",
-                    date : "post.date"
+                    date : "post.date",
+                    user : req.session
                 });
             }
     }}
