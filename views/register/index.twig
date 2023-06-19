@@ -48,11 +48,24 @@
       <label for="username">Username:</label>
       <input type="text" id="username" name="username" required>
 
+      <label for="name">Nombre:</label>
+      <input type="text" id="name" name="name" required>
+
+      <label for="surnames">Apellidos:</label>
+      <input type="text" id="surnames" name="surnames" required>
+
       <label for="email">Email:</label>
       <input type="email" id="email" name="email" required>
 
-      <label for="password">Password:</label>
+      <label for="password">Contraseña:</label>
       <input type="password" id="password" name="password" required>
+
+      <label for="role">Tipo de usuario:</label>
+      <select id="role" name="role" required>
+        <option value="">Select</option>
+        <option value="0">Administrador</option>
+        <option value="1">Usuario normal</option>
+      </select>
 
       <input type="submit" value="Register">
     </form>

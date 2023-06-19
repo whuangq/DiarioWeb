@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html>
 <head>
-  <title>Register Form</title>
+  <title>Login Form</title>
   <style>
     body {
       font-family: Arial, sans-serif;
@@ -43,13 +43,12 @@
 </head>
 <body>
   <div class="container">
-    <h2>Register</h2>
-    <form action="/register" method="post">
+    <h2>Login</h2>
+    <form action="/login" method="post">
+      <label for="username">Username:</label>
+      <input type="text" id="username" name="username" required>
 
-      <label for="email">Email:</label>
-      <input type="email" id="email" name="email" required>
-
-      <label for="password">Password:</label>
+      <label for="password">Contraseña:</label>
       <input type="password" id="password" name="password" required>
 
       <input type="submit" value="Register">
