@@ -53,7 +53,8 @@ class PostsController {
                 res.status(500).send('Error en la creación de la publicación');
               }
         } else {
-            res.render('publicaciones/create', { user : req.session });
+            const categories = await Category.findAll();
+            res.render('publicaciones/create', { categories , user : req.session });
           }
         
       }
