@@ -47,7 +47,7 @@ class PostsController {
           
                 const newPost = await Posts.create({ title, date, text, author, category, image });
           
-                res.redirect('/publicaciones', { user : req.session }); // Redirecciona a la página principal u otra página después de la creación exitosa
+                res.redirect('/publicaciones'); // Redirecciona a la página principal u otra página después de la creación exitosa
               } catch (error) {
                 console.error(error);
                 res.status(500).send('Error en la creación de la publicación');
@@ -66,7 +66,7 @@ class PostsController {
               date: Date(),
               author: req.body.author,
             });
-            res.redirect("/publicaciones/view/" + req.body.postId, { user : req.session });
+            res.redirect("/publicaciones/view/" + req.body.postId);
           } else {
             const post = await Posts.findOne({
               where: {
