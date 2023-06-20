@@ -1,118 +1,149 @@
 {% extends 'layout.twig' %}
 
 {% block body %}
-<!DOCTYPE html>
-<html class="no-js" lang="es">
-  <style>
-    .blog-post {
-      padding: 20px;
-      border: 1px solid #a8a8a8;
-      border-radius: 4px;
-    }
-    .button {
-      display: inline-block;
-      background-color: #4CAF50;
-      color: white;
-      padding: 10px 20px;
-      border: none;
-      border-radius: 4px;
-      text-decoration: none;
-      cursor: pointer;
-      font-size: 16px;
-      transition: background-color 0.3s ease;
-    }
+	<!DOCTYPE html>
+	<html class="no-js" lang="es">
+		<style>
+			.blog-post {
+				padding: 20px;
+				border: 1px solid #a8a8a8;
+				border-radius: 4px;
+			}
+			.button {
+				display: inline-block;
+				background-color: #4CAF50;
+				color: white;
+				padding: 10px 20px;
+				border: none;
+				border-radius: 4px;
+				text-decoration: none;
+				cursor: pointer;
+				font-size: 16px;
+				transition: background-color 0.3s ease;
+			}
 
-    .button:hover {
-      background-color: #45a049;
-    }
-  </style>
+			.button:hover {
+				background-color: #45a049;
+			}
+		</style>
 
-  <body>
-    <div class="callout large primary">
-      <div class="text-center">
-        <h1>Diario web</h1>
-      </div>
-    </div>
-    <section class="grid-container">
-      <div class="grid-x grid-margin-x" id="content">
-        <div class="medium-9 cell">
-            {% for post in posts %}
-              <article class="blog-post">
-                <a href="/publicaciones/view/{{post.id}}"><h3>{{ post.title }}</h3></a><small>{{post.createdAt}}</small>
-                <picture>
-                  {% if post.image %}
-                    <img class="thumbnail" src="{{ post.image }}" alt="Imagen de publicación">
-                  {% else %}
-                    <img class="thumbnail" src="https://cdn.pixabay.com/photo/2016/03/31/19/21/icon-1294942_1280.png" alt="Imagen de publicación alternativa">
-                  {% endif %}
-                </picture>
-                <p>{{ post.text }}</p>
-                <div class="callout">
-                  <ul class="menu simple">
-                    <li><a href="#">Autor: {{post.author}}</a></li>
-                    <li><a href="/comment/p?postId={{post.id}}">Comentarios: {{ post.numComments }}</a></li>
-                    <li><a href="/comment/create">Agregar comentario </a></li>
-                  </ul>
-                </div>
-              </article> 
-            {% endfor %}
-        </div>
-        <aside class="medium-3 cell" data-sticky-container="">
-          <div class="sticky" data-sticky="" data-anchor="content">
-            <a class="button" href="/publicaciones/create">Crear publicación</a>
-            <h4>Categorías</h4>
-            <ul>
-            {% if categories is not empty %}
-              {% for category in categories %}
-                <li><a href="/category/{{ category.name }}">{{ category.name }}</a></li>
-              {% endfor %}
-            {% else %}
-              <p>No hay categorias disponibles</p>
-            {% endif %}  
-            </ul>
-            <h4>Autores</h4>
-            <ul>
-              <li><a href="#">Sandra</a></li>
-              <li><a href="#">Jessica</a></li>
-              <li><a href="#">José</a></li>
-              <li><a href="#">Andrés</a></li>
-          </div>
-        </aside>
-      </div>
-      <div class="grid-x cell">
-        <ul class="pagination" role="navigation" aria-label="Pagination">
-          {% if currentPage > 1 %}
-            <li><a href="/publicaciones?page={{ currentPage - 1 }}" aria-label="Previous">Previa</a></li>
-          {% else %}
-            <li class="disabled">Previa</li>
-          {% endif %}
-          
-          {% for page in 1..totalPages %}
-            {% if page == currentPage %}
-              <li class="current"><span class="show-for-sr">You're on page</span> {{ page }}</li>
-            {% else %}
-              <li><a href="/publicaciones?page={{ page }}" aria-label="Page {{ page }}">{{ page }}</a></li>
-            {% endif %}
-          {% endfor %}
+		<body>
+			<div class="callout large primary">
+				<div class="text-center">
+					<h1>Diario web</h1>
+				</div>
+			</div>
+			<section class="grid-container">
+				<div class="grid-x grid-margin-x" id="content">
+					<div class="medium-9 cell">
+						{% for post in posts %}
+							<article class="blog-post">
+								<a href="/publicaciones/view/{{post.id}}">
+									<h3>{{ post.title }}</h3>
+								</a>
+								<small>{{post.createdAt}}</small>
+								<picture>
+									{% if post.image %}
+										<img class="thumbnail" src="{{ post.image }}" alt="Imagen de publicación">
+									{% else %}
+										<img class="thumbnail" src="https://cdn.pixabay.com/photo/2016/03/31/19/21/icon-1294942_1280.png" alt="Imagen de publicación alternativa">
+									{% endif %}
+								</picture>
+								<p>{{ post.text }}</p>
+								<div class="callout">
+									<ul class="menu simple">
+										<li>
+											<a href="#">Autor:
+												{{post.author}}</a>
+										</li>
+										<li>
+											<a href="/comment/p?postId={{post.id}}">Comentarios:
+												{{ post.numComments }}</a>
+										</li>
+										<li>
+											<a href="/comment/create">Agregar comentario
+											</a>
+										</li>
+									</ul>
+								</div>
+							</article>
+						{% endfor %}
+					</div>
+					<aside class="medium-3 cell" data-sticky-container="">
+						<div class="sticky" data-sticky="" data-anchor="content">
+							<a class="button" href="/publicaciones/create">Crear publicación</a>
+							<h4>Categorías</h4>
+							<ul>
+								{% if categories is not empty %}
+									{% for category in categories %}
+										<li>
+											<a href="/category/{{ category.name }}">{{ category.name }}</a>
+										</li>
+									{% endfor %}
+								{% else %}
+									<p>No hay categorias disponibles</p>
+								{% endif %}
+							</ul>
+							<h4>Autores</h4>
+							<ul>
+								<li>
+									<a href="#">Sandra</a>
+								</li>
+								<li>
+									<a href="#">Jessica</a>
+								</li>
+								<li>
+									<a href="#">José</a>
+								</li>
+								<li>
+									<a href="#">Andrés</a>
+								</li>
+							</div>
+						</aside>
+					</div>
+					<div class="grid-x cell">
+						<ul class="pagination" role="navigation" aria-label="Pagination">
+							{% if currentPage > 1 %}
+								<li>
+									<a href="/publicaciones?page={{ currentPage - 1 }}" aria-label="Previous">Previa</a>
+								</li>
+							{% else %}
+								<li class="disabled">Previa</li>
+							{% endif %}
 
-          {% if currentPage < totalPages %}
-            <li><a href="/publicaciones?page={{ currentPage + 1 }}" aria-label="Next page">Siguiente</a></li>
-          {% else %}
-            <li class="disabled">Siguiente</li>
-          {% endif %}
-        </ul>
-      </div>
-    </section>
-    <script src="bower_components/jquery/dist/jquery.js?hash=4d87a332421d7631f5e204529a472bff"></script>
-    <script src="bower_components/what-input/what-input.js?hash=af041c30741a345292bed3cb0f1295ca"></script>
-    <script src="bower_components/foundation-sites/dist/foundation.js?hash=37375b21ccbe17669cdc30790ba5a003"></script>
-    <script src="js/app.js?hash=78ce4569316d2924214f821d75e9028f"></script>
-    <script src="https://code.jquery.com/jquery-2.1.4.min.js"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/foundation/6.4.3/js/foundation.min.js"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/motion-ui/1.2.3/motion-ui.min.js"></script>
-    <script>
-      $(document).foundation();
-    </script>
-  </body>
-</html>
+							{% for page in 1..totalPages %}
+								{% if page == currentPage %}
+									<li class="current">
+										<span class="show-for-sr">You're on page</span>
+										{{ page }}</li>
+								{% else %}
+									<li>
+										<a href="/publicaciones?page={{ page }}" aria-label="Page {{ page }}">{{ page }}</a>
+									</li>
+								{% endif %}
+							{% endfor %}
+
+							{% if currentPage < totalPages %}
+								<li>
+									<a href="/publicaciones?page={{ currentPage + 1 }}" aria-label="Next page">Siguiente</a>
+								</li>
+							{% else %}
+								<li class="disabled">Siguiente</li>
+							{% endif %}
+						</ul>
+					</div>
+				</section>
+				<script src="bower_components/jquery/dist/jquery.js?hash=4d87a332421d7631f5e204529a472bff"></script>
+				<script src="bower_components/what-input/what-input.js?hash=af041c30741a345292bed3cb0f1295ca"></script>
+				<script src="bower_components/foundation-sites/dist/foundation.js?hash=37375b21ccbe17669cdc30790ba5a003"></script>
+				<script src="js/app.js?hash=78ce4569316d2924214f821d75e9028f"></script>
+				<script src="https://code.jquery.com/jquery-2.1.4.min.js"></script>
+				<script src="https://cdnjs.cloudflare.com/ajax/libs/foundation/6.4.3/js/foundation.min.js"></script>
+				<script src="https://cdnjs.cloudflare.com/ajax/libs/motion-ui/1.2.3/motion-ui.min.js"></script>
+				<script>
+					$(document).foundation();
+				</script>
+			</body>
+		</body>
+	</html>
 {% endblock %}

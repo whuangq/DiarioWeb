@@ -37,14 +37,14 @@ class PostsController {
       async create(req, res) {
         if (req.method === 'POST') {
             try {
-                const { title, date, text, author, category } = req.body;
+                const { title, date, text, category } = req.body;
                 let image = '';
           
                 if (req.file) {
                   // Si se proporciona una imagen, obtener el nombre del archivo subido
                   image = 'images/' + req.file.filename;
                 }
-          
+                const author = req.session.username;
                 const newPost = await Posts.create({ title, date, text, author, category, image });
           
                 res.redirect('/publicaciones'); // Redirecciona a la página principal u otra página después de la creación exitosa
