@@ -11,6 +11,7 @@ module.exports = (sequelize, DataTypes) => {
       // define association here
       Category.hasMany(models.Posts, {
         foreignKey: 'category',
+        sourceKey: 'name', // utiliza la columna name para comparar con posts.category
         as: 'posts',
       });
     }
