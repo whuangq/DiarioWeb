@@ -1,6 +1,6 @@
 // controllers/CategoryController.js
 
-const { Posts, Category } = require('../models');
+const { Posts, Category, Users } = require('../models');
 
 class CategoryController {
   async index(req, res) {
@@ -26,9 +26,15 @@ class CategoryController {
 
         // console.log(dcategory.posts);
 
+        const totalPosts = await dcategory.countPosts();
+        console.log("totalposts: "+totalPosts);
+        const totalPages = Math.ceil(totalPosts / limit);
+
         const categories = await Category.findAll();
+
+        const authors = await Users.findAll();
     
-        res.render('category/index', { dcategory, categories });
+        res.render('category/index', { dcategory, categories, authors, currentPage, totalPages, user : req.session });
       } catch (error) {
         console.error(error);
         res.status(500).send('Error al obtener los posts de la categoría');
