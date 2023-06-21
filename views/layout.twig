@@ -27,7 +27,7 @@
             <li class="menu-text">{{user.name}}</li>
             <a href="/access/logout" role="button">Cerrar sesión</a>
             {% if user.role == 0 %}
-              <a href="#" role="button">Administración</a>
+              <a href="/admin" role="button">Administración</a>
             {% endif %}
           {% else %}
             <a href="/access" role="button">Acceso</a>

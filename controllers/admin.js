@@ -1,7 +1,6 @@
 const { Posts, Comment, Users, Category } = require('../models');
-const { Sequelize } = require('sequelize');
 
-class PostsController {
+class AdminController {
     async index(req, res) {
         try {
           const currentPage = req.query.page || 1;
@@ -10,24 +9,15 @@ class PostsController {
           const offset = (currentPage - 1) * limit;
       
           const posts = await Posts.findAll({
-            order: [['createdAt', 'DESC']],
-            limit,
-            offset,
+            order: [['createdAt', 'DESC']]
           });
-    
-          const posts1 = await Posts.findAndCountAll({
-            order: [['createdAt', 'DESC']],
-            limit,
-            offset,
-          });
-      
-          const totalPosts = posts1.count;
-          const totalPages = Math.ceil(totalPosts / limit);
-    
           // Obtener las categorías
           const categories = await Category.findAll();
+
+          // Obtener los autores
+          const users = await Users.findAll();
           
-          res.render('publicaciones/index', { posts, currentPage, totalPages, categories, user : req.session });
+          res.render('admin/index', { posts, categories, user : req.session, users });
         } catch (error) {
           console.error(error);
           res.status(500).send('Error al obtener las publicaciones');
@@ -44,11 +34,8 @@ class PostsController {
                   // Si se proporciona una imagen, obtener el nombre del archivo subido
                   image = 'images/' + req.file.filename;
                 }
-
-                const numComments = 0;
-
                 const author = req.session.username;
-                const newPost = await Posts.create({ title, date, text, author, category, image, numComments });
+                const newPost = await Posts.create({ title, date, text, author, category, image });
           
                 res.redirect('/publicaciones'); // Redirecciona a la página principal u otra página después de la creación exitosa
               } catch (error) {
@@ -62,39 +49,14 @@ class PostsController {
         
       }
 
-      async delete(req, res, next) {
-        await Posts.destroy({
-          where: {
-            id: req.params.id,
-          },
-        });
-        res.redirect("/admin");
-      }
-
     async view(req, res, next) {
         if (req.method === "POST") {
-            const newComment = await Comment.create({
+            await Comment.create({
               text: req.body.text,
               postId: req.body.postId,
               date: Date(),
               author: req.body.author,
             });
-            
-            // Verficar creacion del comentario exitoso
-            if (newComment) {
-              const affectedRows = await Posts.update(
-                { numComments: Sequelize.literal('numComments + 1') },
-                { where: { id: req.body.postId } }
-              );
-              if (affectedRows > 0) {
-                console.log('El comentario se creó con éxito.');
-              } else {
-                console.log('No se pudo actualizar el número de comentarios.');
-              }
-            } else {
-              console.log('No se pudo crear el comentario.');
-            }
-            
             res.redirect("/publicaciones/view/" + req.body.postId);
           } else {
             const post = await Posts.findOne({
@@ -115,7 +77,6 @@ class PostsController {
                     author : post.author,
                     image : post.image,
                     date : post.date,
-                    numComments: post.numComments,
                     comments : comments,
                     user : req.session
                 });
@@ -132,4 +93,4 @@ class PostsController {
     }}
 }
 
-module.exports = PostsController;
+module.exports = AdminController;
