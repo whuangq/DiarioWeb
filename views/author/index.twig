@@ -53,7 +53,7 @@
                 <a href="/publicaciones/view/{{post.id}}"><h3>{{ post.title }}</h3></a><small>{{post.createdAt}}</small>
                 <picture>
                   {% if post.image %}
-                    <img class="thumbnail" src="{{ post.image }}" alt="Imagen de publicación">
+                    <img class="thumbnail" src="../{{ post.image }}" alt="Imagen de publicación">
                   {% else %}
                     <img class="thumbnail" src="https://cdn.pixabay.com/photo/2016/03/31/19/21/icon-1294942_1280.png" alt="Imagen de publicación alternativa">
                   {% endif %}
