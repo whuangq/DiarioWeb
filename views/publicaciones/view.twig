@@ -51,8 +51,27 @@
 			font-size: 12px;
 			color: #777;
 		}
-	</style>
 
+		.back-button {
+			position: flex;
+			top: 45px;
+			left: 5%;
+			transform: translateX(-50%);
+			background-color: gray;
+			padding: 10px 20px;
+			border-radius: 4px;
+			color: white;
+			transition: background-color 0.3s ease;
+		}
+
+		.back-button:hover {
+			background-color: darkgray;
+		}
+	</style>
+	
+	<div>
+		<a class="back-button" href="/publicaciones">Regresar a la página principal</a>
+	</div>
 	<div class="post">
 		<div class="post-inner">
 			<h2 class="post-title">{{ title }}</h2>
@@ -93,7 +112,7 @@
 					</ul>
 				</div>
 			{% else %}
-				<p>No comments yet.</p>
+				<p>No hay comentarios.</p>
 			{% endif %}
 			<form method="POST">
 				<div class="mb-3">
@@ -106,4 +125,5 @@
 			</div>
 		</form>
 	</div>
-</div>{% endblock %}
+</div>
+{% endblock %}
