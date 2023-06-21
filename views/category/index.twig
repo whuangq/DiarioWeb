@@ -42,7 +42,7 @@
   <body>
     <div class="callout large primary">
       <div class="text-center">
-        <h1>Publicaciones de la categoría: pruebas</h1>
+        <h1>Publicaciones de la categoría: {{ dcategory.name }}</h1>
       </div>
     </div>
     <section class="grid-container">
@@ -53,17 +53,26 @@
                 <a href="/publicaciones/view/{{post.id}}"><h3>{{ post.title }}</h3></a><small>{{post.createdAt}}</small>
                 <picture>
                   {% if post.image %}
-                    <img class="thumbnail" src="{{ post.image }}" alt="Imagen de publicación">
+                    <img class="thumbnail" src="../{{ post.image }}" alt="Imagen de publicación">
                   {% else %}
                     <img class="thumbnail" src="https://cdn.pixabay.com/photo/2016/03/31/19/21/icon-1294942_1280.png" alt="Imagen de publicación alternativa">
                   {% endif %}
                 </picture>
-                <p>{{ post.text }}</p>
+                <p>
+                  {% if post.text|length > 300 %}
+                    {{ post.text|slice(0, 300) ~ '...'}}
+                    <a href="/publicaciones/view/{{post.id}}" class="read-more-link">Leer más</a>
+                  {% else %}
+                    {{ post.text }}
+								{% endif %}
+                </p>
                 <div class="callout">
                   <ul class="menu simple">
                     <li><a href="#">Autor: {{post.author}}</a></li>
-                    <li><a href="/comment/p?postId={{post.id}}">Comentarios: {{ post.numComments }}</a></li>
-                    <li><a href="/comment/create">Agregar comentario </a></li>
+                    <li>
+										<a href="/publicaciones/view/{{post.id}}">Comentarios:
+											{{ post.numComments ? post.numComments : 0 }}</a>
+									</li>
                   </ul>
                 </div>
               </article> 
@@ -71,7 +80,9 @@
         </div>
         <aside class="medium-3 cell" data-sticky-container="">
           <div class="sticky" data-sticky="" data-anchor="content">
-            <a class="button" href="/publicaciones/create">Crear publicación</a>
+            {% if user.username != null %}
+							<a class="button" href="/publicaciones/create">Crear publicación</a>
+						{% endif %}
             <h4>Categorías</h4>
             <ul>
             {% if categories is not empty %}
@@ -84,36 +95,39 @@
             </ul>
             <h4>Autores</h4>
             <ul>
-              <li><a href="#">Sandra</a></li>
-              <li><a href="#">Jessica</a></li>
-              <li><a href="#">José</a></li>
-              <li><a href="#">Andrés</a></li>
-            </ul>
+							{% for author in authors %}
+								<li>
+									<a href="/authors/{{ author.username }}">{{ author.username }}</a>
+								</li>
+							{% endfor %}
+						</ul>
             <a class="button back-button" href="/publicaciones">Regresar a la página principal</a>
           </div>
         </aside>
       </div>
       <div class="grid-x cell">
         <ul class="pagination" role="navigation" aria-label="Pagination">
-          {% if currentPage > 1 %}
-            <li><a href="/publicaciones?page={{ currentPage - 1 }}" aria-label="Previous">Previa</a></li>
-          {% else %}
-            <li class="disabled">Previa</li>
-          {% endif %}
-          
-          {% for page in 1..totalPages %}
-            {% if page == currentPage %}
-              <li class="current"><span class="show-for-sr">You're on page</span> {{ page }}</li>
+        {% if totalPages > 1 %}
+            {% if currentPage > 1 %}
+              <li><a href="/category/{{ dcategory.name }}?page={{ currentPage - 1 }}" aria-label="Previous">Previa</a></li>
             {% else %}
-              <li><a href="/publicaciones?page={{ page }}" aria-label="Page {{ page }}">{{ page }}</a></li>
+              <li class="disabled">Previa</li>
             {% endif %}
-          {% endfor %}
+            
+            {% for page in 1..totalPages %}
+              {% if page == currentPage %}
+                <li class="current"><span class="show-for-sr">You're on page</span> {{ page }}</li>
+              {% else %}
+                <li><a href="/category/{{ dcategory.name }}?page={{ page }}" aria-label="Page {{ page }}">{{ page }}</a></li>
+              {% endif %}
+            {% endfor %}
 
-          {% if currentPage < totalPages %}
-            <li><a href="/publicaciones?page={{ currentPage + 1 }}" aria-label="Next page">Siguiente</a></li>
-          {% else %}
-            <li class="disabled">Siguiente</li>
-          {% endif %}
+            {% if currentPage < totalPages %}
+              <li><a href="/category/{{ dcategory.name }}?page={{ currentPage + 1 }}" aria-label="Next page">Siguiente</a></li>
+            {% else %}
+              <li class="disabled">Siguiente</li>
+            {% endif %}
+        {% endif %}
         </ul>
       </div>
     </section>
