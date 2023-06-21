@@ -93,32 +93,34 @@
 				</div>
 				<div class="grid-x cell">
 					<ul class="pagination" role="navigation" aria-label="Pagination">
-						{% if currentPage > 1 %}
-							<li>
-								<a href="/publicaciones?page={{ currentPage - 1 }}" aria-label="Previous">Previa</a>
-							</li>
-						{% else %}
-							<li class="disabled">Previa</li>
-						{% endif %}
-
-						{% for page in 1..totalPages %}
-							{% if page == currentPage %}
-								<li class="current">
-									<span class="show-for-sr">You're on page</span>
-									{{ page }}</li>
-							{% else %}
+						{% if totalPages > 1 %}
+							{% if currentPage > 1 %}
 								<li>
-									<a href="/publicaciones?page={{ page }}" aria-label="Page {{ page }}">{{ page }}</a>
+									<a href="/publicaciones?page={{ currentPage - 1 }}" aria-label="Previous">Previa</a>
 								</li>
+							{% else %}
+								<li class="disabled">Previa</li>
 							{% endif %}
-						{% endfor %}
 
-						{% if currentPage < totalPages %}
-							<li>
-								<a href="/publicaciones?page={{ currentPage + 1 }}" aria-label="Next page">Siguiente</a>
-							</li>
-						{% else %}
-							<li class="disabled">Siguiente</li>
+							{% for page in 1..totalPages %}
+								{% if page == currentPage %}
+									<li class="current">
+										<span class="show-for-sr">You're on page</span>
+										{{ page }}</li>
+								{% else %}
+									<li>
+										<a href="/publicaciones?page={{ page }}" aria-label="Page {{ page }}">{{ page }}</a>
+									</li>
+								{% endif %}
+							{% endfor %}
+
+							{% if currentPage < totalPages %}
+								<li>
+									<a href="/publicaciones?page={{ currentPage + 1 }}" aria-label="Next page">Siguiente</a>
+								</li>
+							{% else %}
+								<li class="disabled">Siguiente</li>
+							{% endif %}
 						{% endif %}
 					</ul>
 				</div>
