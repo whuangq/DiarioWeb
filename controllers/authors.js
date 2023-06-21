@@ -8,19 +8,29 @@ class AuthorsController {
         const limit = 5; // Número máximo de publicaciones por página
       
         const offset = (currentPage - 1) * limit;
-        const username = req.params.username;
-        console.log(username)
+        const usernameInput = req.params.category;
+        // console.log("uesrname "+usernameInput);
 
-        const posts = await Posts.findAll({
-          where: { author: username }
+        const dAuthor = await Users.findOne({
+          where: { username: usernameInput },
+          include: {
+            model: Posts,
+            as: 'posts',
+            order: [['createdAt', 'DESC']],
+            limit,
+            offset,
+          },
         });
 
-        const authors = await Users.findAll(
-        );
+        const totalPosts = await dAuthor.countPosts();
+        // console.log("totalposts: "+totalPosts);
+        const totalPages = Math.ceil(totalPosts / limit);
+
+        const authors = await Users.findAll();
     
         const categories = await Category.findAll();
 
-        res.render('authors/'+ username, { posts, categories, authors });
+        res.render('author/index', { dAuthor, categories, authors, currentPage, totalPages, user : req.session });
       } catch (error) {
         console.error(error);
         res.status(500).send('Error al obtener los posts del autor');

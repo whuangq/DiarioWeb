@@ -22,7 +22,13 @@ module.exports = {
         type: Sequelize.STRING(8192)
       },
       author: {
-        type: Sequelize.STRING
+        type: Sequelize.STRING,
+        references: {
+          model: 'Users',
+          key: 'username',
+        },
+        onUpdate: 'CASCADE',
+        onDelete: 'SET NULL',
       },
       category: {
         type: Sequelize.STRING,

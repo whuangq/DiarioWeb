@@ -15,6 +15,7 @@ module.exports = (sequelize, DataTypes) => {
       });
       Posts.belongsTo(models.Users, {
         foreignKey: 'author',
+        targetKey: 'username',
       });
       Posts.belongsTo(models.Category, {
         foreignKey: 'category',

@@ -11,9 +11,11 @@ module.exports = (sequelize, DataTypes) => {
      */
     static associate(models) {
       // define association here
-      /*Users.hasMany(models.Posts, {
-        foreignkey: 'author',
-      });*/
+      Users.hasMany(models.Posts, {
+        foreignKey: 'author',
+        sourceKey: 'username',// utiliza la columna name para comparar con posts.author
+        as: 'posts',
+      });
     }
   }
   Users.init({

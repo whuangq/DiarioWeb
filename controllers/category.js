@@ -27,7 +27,7 @@ class CategoryController {
         // console.log(dcategory.posts);
 
         const totalPosts = await dcategory.countPosts();
-        console.log("totalposts: "+totalPosts);
+        // console.log("totalposts: "+totalPosts);
         const totalPages = Math.ceil(totalPosts / limit);
 
         const categories = await Category.findAll();
