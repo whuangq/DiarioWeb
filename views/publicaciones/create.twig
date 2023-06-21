@@ -59,23 +59,38 @@
 			opacity: 0;
 		}
 
-		.submit-btn {
-			background-color: #4CAF50;
-			color: white;
-			border: none;
-			padding: 10px 20px;
-			border-radius: 4px;
-			font-size: 16px;
-			font-weight: bold;
-		}
-	</style>
-	<div class="form-container">
-		<h1>Crear publicación</h1>
-		<form method="post" enctype="multipart/form-data">
-			<div class="form-group">
-				<label for="title">Título:</label>
-				<input id="title" name="title" type="text" required>
-			</div>
+    .submit-btn {
+      background-color: #4CAF50;
+      color: white;
+      border: none;
+      padding: 10px 20px;
+      border-radius: 4px;
+      font-size: 16px;
+      font-weight: bold;
+    }
+
+    .cancel-btn {
+      background-color: gray;
+      color: white;
+      padding: 10px 20px;
+      border-radius: 4px;
+      font-size: 16px;
+      font-weight: bold;
+      text-decoration: none;
+      transition: background-color 0.3s ease;
+    }
+
+    .cancel-btn:hover {
+      background-color: darkgray;
+    }
+  </style>
+  <div class="form-container">
+    <h1>Crear publicación</h1>
+    <form method="post" enctype="multipart/form-data">
+      <div class="form-group">
+        <label for="title">Título:</label>
+        <input id="title" name="title" type="text" required>
+      </div>
 
 			<div class="form-group">
 				<label for="date"></label>
@@ -92,31 +107,32 @@
 				<input id="author" name="author" type="hidden">
 			</div>
 
-			<div class="form-group">
-				<label for="category">Categoría de la publicación:</label>
-				<select class="form-select" id="category" name="category" required>
-					<option selected></option>
-					{% for category in categories %}
-						<option value="{{ category.name }}">{{ category.name }}</option>
-					{% endfor %}
-				</select>
-			</div>
+      <div class="form-group">
+        <label for="category">Categoría de la publicación:</label>
+        <select class="form-select" id="category" name="category" required>
+              <option selected></option>
+              {% for category in categories %}
+                <option value="{{ category.name }}">{{ category.name }}</option>
+              {% endfor %}
+            </select>
+      </div>
 
-			<div class="form-group">
-				<label for="image">Imagen:</label>
-				<div class="upload-btn-wrapper">
-					<button class="btn">Seleccionar archivo</button>
-					<input type="file" id="image" name="image" accept="image/*">
-				</div>
-			</div>
-
-			<input type="submit" class="submit-btn" value="Crear">
-		</form>
-	</div>
-	<script>
-		// Set the current date as the value of the hidden date input field
-const currentDate = new Date().toISOString().split('T')[0];
-document.getElementById('date').value = currentDate;
-	</script>
+      <div class="form-group">
+        <label for="image">Imagen:</label>
+        <div class="upload-btn-wrapper">
+          <button class="btn">Seleccionar archivo</button>
+          <input type="file" id="image" name="image" accept="image/*">
+        </div>
+      </div>
+      
+      <a class="cancel-btn" href="/publicaciones">Cancelar</a>
+      <input type="submit" class="submit-btn" value="Crear">
+    </form>
+  </div>
+  <script>
+    // Set the current date as the value of the hidden date input field
+    const currentDate = new Date().toISOString().split('T')[0];
+    document.getElementById('date').value = currentDate;
+  </script>
 
 {% endblock %}
