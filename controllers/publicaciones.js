@@ -1,5 +1,5 @@
-// const Posts = require('../models').Posts;
 const { Posts, Comment, Users, Category } = require('../models');
+const { Sequelize } = require('sequelize');
 
 class PostsController {
     async index(req, res) {
@@ -44,8 +44,11 @@ class PostsController {
                   // Si se proporciona una imagen, obtener el nombre del archivo subido
                   image = 'images/' + req.file.filename;
                 }
+
+                const numComments = 0;
+
                 const author = req.session.username;
-                const newPost = await Posts.create({ title, date, text, author, category, image });
+                const newPost = await Posts.create({ title, date, text, author, category, image, numComments });
           
                 res.redirect('/publicaciones'); // Redirecciona a la página principal u otra página después de la creación exitosa
               } catch (error) {
@@ -61,12 +64,28 @@ class PostsController {
 
     async view(req, res, next) {
         if (req.method === "POST") {
-            await Comment.create({
+            const newComment = await Comment.create({
               text: req.body.text,
               postId: req.body.postId,
               date: Date(),
               author: req.body.author,
             });
+            
+            // Verficar creacion del comentario exitoso
+            if (newComment) {
+              const affectedRows = await Posts.update(
+                { numComments: Sequelize.literal('numComments + 1') },
+                { where: { id: req.body.postId } }
+              );
+              if (affectedRows > 0) {
+                console.log('El comentario se creó con éxito.');
+              } else {
+                console.log('No se pudo actualizar el número de comentarios.');
+              }
+            } else {
+              console.log('No se pudo crear el comentario.');
+            }
+            
             res.redirect("/publicaciones/view/" + req.body.postId);
           } else {
             const post = await Posts.findOne({
@@ -87,6 +106,7 @@ class PostsController {
                     author : post.author,
                     image : post.image,
                     date : post.date,
+                    numComments: post.numComments,
                     comments : comments,
                     user : req.session
                 });
