@@ -1,3 +1,5 @@
+const Users = require("../models").Users;
+
 class AccessController {
     async index(req, res, next) {
         res.render('access/index');
@@ -15,6 +17,15 @@ class AccessController {
         } else {
             res.end();
         }
+    }
+
+    async delete(req, res, next) {
+      await Users.destroy({
+        where: {
+          id: req.params.id,
+        },
+      });
+      res.redirect("/admin");
     }
 }
 

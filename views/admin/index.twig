@@ -1,0 +1,82 @@
+{% extends 'layout.twig' %}
+
+{% block body %}
+        <h3>Publicaciones:</h3>
+        <table class="table">
+            <thead>
+                <tr>
+                <th>Título</th>
+                <th>Fecha</th>
+                <th>Categoria</th>
+                <th>Autor</th>
+                <th>Acciones</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for post in posts %}
+                <tr>
+                    <td>{{ post.title }}</td>
+                    <td>{{ post.date|date('d/m/Y') }}</td>
+                    <td>{{ post.category }}</td>
+                    <td>{{ post.author }}</td>
+                    <td>
+                    <a href="/publicaciones/delete/{{ post.id }}" role="button">Borrar</a>
+                    </td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+        <hr />
+        <h3>Usuarios:</h3>
+            <table class="table">
+            <thead>
+                <tr>
+                <th>Nombre</th>
+                <th>Apellidos</th>
+                <th>Correo Electrónico</th>
+                <th>Acciones</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for usr in users %}
+                <tr>
+                    <td class="col-8">{{ usr.name }}</td>
+                    <td class="col-8">{{ usr.surnames }}</td>
+                    <td class="col-8">{{ usr.email }}</td>
+                    <td class="col-4">
+                    <a class="link-danger fs-4" href="/access/delete/{{ usr.id }}">Borrar</a>
+                    </td>
+                </tr>
+                {% endfor %}
+            </tbody>
+            </table>
+        <hr />
+        <h3>Categorías:</h3>
+        <table class="table">
+            <tbody>
+            {% for category in categories %}
+                <tr>
+                <td class="col-8">
+                   {{ category.name }}
+                </td>
+                <td class="col-4">
+                    <a href="/category/delete/{{ category.id }}" onclick="return confirm('¿Está seguro?');">Borrar</a>
+                </td>
+                </tr>
+            {% endfor %}
+            <tr>
+                <td class="col-8">
+                <a href="/posts/createCategory">Crear nueva categoría</a>
+                </td>
+                <td class="col-4"></td>
+            </tr>
+            </tbody>
+        </table>
+        <hr />
+      </div>
+    </div>
+    <div>
+      <a href="/publicaciones" role="button">Regresar a la página principal</a>
+    </div>
+  </div>
+{% endblock %}

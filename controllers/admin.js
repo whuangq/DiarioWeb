@@ -1,7 +1,6 @@
-// const Posts = require('../models').Posts;
 const { Posts, Comment, Users, Category } = require('../models');
 
-class PostsController {
+class AdminController {
     async index(req, res) {
         try {
           const currentPage = req.query.page || 1;
@@ -10,24 +9,15 @@ class PostsController {
           const offset = (currentPage - 1) * limit;
       
           const posts = await Posts.findAll({
-            order: [['createdAt', 'DESC']],
-            limit,
-            offset,
+            order: [['createdAt', 'DESC']]
           });
-    
-          const posts1 = await Posts.findAndCountAll({
-            order: [['createdAt', 'DESC']],
-            limit,
-            offset,
-          });
-      
-          const totalPosts = posts1.count;
-          const totalPages = Math.ceil(totalPosts / limit);
-    
           // Obtener las categorías
           const categories = await Category.findAll();
+
+          // Obtener los autores
+          const users = await Users.findAll();
           
-          res.render('publicaciones/index', { posts, currentPage, totalPages, categories, user : req.session });
+          res.render('admin/index', { posts, categories, user : req.session, users });
         } catch (error) {
           console.error(error);
           res.status(500).send('Error al obtener las publicaciones');
@@ -57,15 +47,6 @@ class PostsController {
             res.render('publicaciones/create', { categories , user : req.session });
           }
         
-      }
-
-      async delete(req, res, next) {
-        await Posts.destroy({
-          where: {
-            id: req.params.id,
-          },
-        });
-        res.redirect("/admin");
       }
 
     async view(req, res, next) {
@@ -112,4 +93,4 @@ class PostsController {
     }}
 }
 
-module.exports = PostsController;
+module.exports = AdminController;

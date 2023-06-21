@@ -22,6 +22,15 @@ class CategoryController {
         res.status(500).send('Error al obtener los posts de la categoría');
       }
   }
+
+  async delete(req, res, next) {
+    await Category.destroy({
+      where: {
+        id: req.params.id,
+      },
+    });
+    res.redirect("/admin");
+  }
 }
 
 module.exports = CategoryController;
