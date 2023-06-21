@@ -43,7 +43,7 @@
 							<p>
 								{% if post.text|length > 300 %}
 									{{ post.text|slice(0, 300) ~ '...'}}
-									<a href="#" class="read-more-link">Leer más</a>
+									<a href="/publicaciones/view/{{post.id}}" class="read-more-link">Leer más</a>
 								{% else %}
 									{{ post.text }}
 								{% endif %}
@@ -82,18 +82,12 @@
 						</ul>
 						<h4>Autores</h4>
 						<ul>
-							<li>
-								<a href="#">Sandra</a>
-							</li>
-							<li>
-								<a href="#">Jessica</a>
-							</li>
-							<li>
-								<a href="#">José</a>
-							</li>
-							<li>
-								<a href="#">Andrés</a>
-							</li>
+							{% for author in authors %}
+								<li>
+									<a href="/authors/{{ author.username }}">{{ author.username }}</a>
+								</li>
+							{% endfor %}
+						</ul>
 						</div>
 					</aside>
 				</div>

@@ -19,7 +19,7 @@ app.use(logger('dev'));
 app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
 app.use(cookieParser());
-app.use(session({ secret: 'una-hilera-secreta-que-debo-cambiar', cookie: { maxAge: 60000 }, resave: false, saveUninitialized: false }));
+app.use(session({ secret: 'una-hilera-secreta-que-debo-cambiar', cookie: { maxAge: 60000*60*24 }, resave: false, saveUninitialized: false }));
 app.use(express.static(path.join(__dirname, 'public')));
 
 app.use('/', indexRouter);

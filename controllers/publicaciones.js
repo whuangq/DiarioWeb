@@ -16,10 +16,12 @@ class PostsController {
           });
     
           const posts1 = await Posts.findAndCountAll({
-            order: [['createdAt', 'DESC']],
+            order: [['createdAt', 'DESC']],   
             limit,
             offset,
           });
+
+          const authors = await Users.findAll();
       
           const totalPosts = posts1.count;
           const totalPages = Math.ceil(totalPosts / limit);
@@ -27,7 +29,7 @@ class PostsController {
           // Obtener las categorías
           const categories = await Category.findAll();
           
-          res.render('publicaciones/index', { posts, currentPage, totalPages, categories, user : req.session });
+          res.render('publicaciones/index', { posts, currentPage, totalPages, categories, user : req.session, authors });
         } catch (error) {
           console.error(error);
           res.status(500).send('Error al obtener las publicaciones');

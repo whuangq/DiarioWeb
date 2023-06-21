@@ -55,6 +55,9 @@ router
   .all("/:controller/:category", (req, res, next) => {
     new controllers[req.params.controller]().index(req, res, next);
   })
+  .all("/:controller/:username", (req, res, next) => {
+    new controllers[req.params.controller]().index(req, res, next);
+  })
 
 
 /*

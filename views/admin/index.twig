@@ -65,13 +65,17 @@
                 </tr>
             {% endfor %}
             <tr>
-                <td class="col-8">
-                <a href="/posts/createCategory">Crear nueva categoría</a>
-                </td>
-                <td class="col-4"></td>
             </tr>
             </tbody>
         </table>
+        <form method="POST">
+                    <div class="mb-3">
+                        <input type="text" class="form-control" id="name" name="name" maxlength="200" minlength='1' placeholder="Crear categoría nueva. . ." required></textarea>
+                    </div>
+                    <div>
+                        <input class="btn btn-primary" type="submit" value="Crear categoría"/>
+                    </div>
+		        </form>
         <hr />
       </div>
     </div>
